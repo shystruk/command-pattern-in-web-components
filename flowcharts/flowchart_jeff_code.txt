@@ -1,0 +1,42 @@
+let amount = 5;
+let lastSelectedOption = '';
+let lastRequestName = '';
+
+function descriptionEventListener(event) {
+  amount = 5;
+  lastRequestName = 'getJobsByDescription';
+  
+  getJobsByDescription(event.option, amount).then(renderJobs);
+}
+
+function locationEventListener(event) {  
+  amount = 5;
+  lastRequestName = 'getJobsBylocation';
+  
+  getJobsBylocation(event.option, amount).then(renderJobs);
+}
+
+function fullTimeEventListener(event) {  
+  amount = 5;
+  lastRequestName = 'getJobsByFullTime';
+  
+  getJobsByFullTime(event.option, amount).then(renderJobs);
+}
+
+function moreEventListener() {
+  amount += 5
+  
+  if (lastRequestName === 'getJobsByDescription') {     
+    getJobsByDescription(lastSelectedOption,amount).then(checkAmountOfJobsAndHideButton);
+  }
+  
+  if (lastRequestName === 'getJobsBylocation') {
+    getJobsBylocation(lastSelectedOption,amount).then(checkAmountOfJobsAndHideButton);;
+  }
+  
+  if (lastRequestName === 'getJobsByFullTime') {
+    getJobsByFullTime(lastSelectedOption,amount).then(checkAmountOfJobsAndHideButton);;
+  }
+}
+
+

@@ -1,0 +1,50 @@
+let lastRequestName = '';
+let lastSelectedOption = '';
+let amount = '';
+
+
+function executeGetJobs(config) {
+  if (lastRequestName !== config.requestName || config.requestValue !== lastSelectedOption) {
+    amount = 5;
+  }  
+
+  lastRequestName = config.requestName;
+  lastSelectedOption = config.requestValue;
+
+  getJobs(config.getUrl(config.requestValue, amount))
+    .then(hideMoreIfAndIncreaseAmountIf.bind(this, config.parser))
+}
+
+
+function buildRequestConfig(requestValue, requestName) {
+  let config = {
+    requestName,
+    requestValue
+  };
+  
+  switch(requestName) {
+    case 'getJobsByDescription':
+      config.parser = 'function';
+      config.getUrl = 'function';
+      break;       
+    case 'getJobsBylocation':
+      config.parser = 'function';
+      config.getUrl = 'function';
+      break;  
+    case 'getJobsByFullTime':
+      config.parser = 'function';
+      config.getUrl = 'function';
+      break;  
+  }
+  
+  return config;
+}
+
+
+function descriptionEventListener(event) {
+  executeGetJobs(buildRequestConfig(event.option, 'getJobsByDescription'))
+}
+
+function getMoreJobs() {
+	executeGetJobs(buildRequestConfig(lastSelectedOption, lastRequestName));
+}

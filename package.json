@@ -1,0 +1,23 @@
+{
+  "name": "web-components",
+  "version": "1.0.0",
+  "description": "web-components, the command pattern",
+  "scripts": {
+    "build": "webpack"
+  },
+  "author": "shystrukk",
+  "license": "MIT",
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-plugin-transform-async-to-generator": "^6.24.1",
+    "babel-plugin-transform-custom-element-classes": "^0.1.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "cors": "^2.8.4",
+    "express": "^4.16.2",
+    "node-fetch": "^1.7.3",
+    "webpack": "^3.8.1"
+  }
+}
