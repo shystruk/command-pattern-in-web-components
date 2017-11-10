@@ -1,2 +1,6 @@
-# command-pattern-in-web-components
-Here you may find Custom Elements with GitHub Jobs API (express and cors)
+# Custom Elements with GitHub Jobs API (express and cors) 
+
+Run server (localhost:80)
+```
+node index.js
+```
