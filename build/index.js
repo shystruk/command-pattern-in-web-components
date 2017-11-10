@@ -252,7 +252,7 @@ var Find_Your_Job = function (_CustomElement2) {
                 for (var _iterator = selectElements[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
                     var element = _step.value;
 
-                    element.onchange = this.handleSelectorOnChange.bind(self);
+                    element.onchange = this.handleSelectOnChange.bind(self);
                 }
             } catch (err) {
                 _didIteratorError = true;
@@ -285,8 +285,8 @@ var Find_Your_Job = function (_CustomElement2) {
             };
         }
     }, {
-        key: 'handleSelectorOnChange',
-        value: function handleSelectorOnChange(event) {
+        key: 'handleSelectOnChange',
+        value: function handleSelectOnChange(event) {
             var _this2 = this;
 
             var target = event.target;

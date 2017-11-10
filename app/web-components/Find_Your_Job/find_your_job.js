@@ -31,7 +31,7 @@ class Find_Your_Job extends HTMLElement {
         ];
 
         for (let element of selectElements) {
-            element.onchange = this.handleSelectorOnChange.bind(self);
+            element.onchange = this.handleSelectOnChange.bind(self);
         }
     }
 
@@ -51,7 +51,7 @@ class Find_Your_Job extends HTMLElement {
         };
     }
 
-    handleSelectorOnChange(event) {
+    handleSelectOnChange(event) {
         let target = event.target;
 
         this.showLoader(true);
