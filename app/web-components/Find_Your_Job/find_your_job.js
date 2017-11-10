@@ -12,61 +12,65 @@ class Find_Your_Job extends HTMLElement {
         this.attachShadow({mode: 'open'});
         this.shadowRoot.appendChild(template.content.cloneNode(true));
 
+        this.resource = Object.create(resource);
+
         this.$moreJobsElement = this.shadowRoot.querySelector('.more-jobs');
         this.$jobsListElement = this.shadowRoot.querySelector('.jobs-list');
         this.$loaderElement = this.shadowRoot.querySelector('.loader');
 
-        this.selectorsOnChangeListener(this.shadowRoot);
-        this.moreJobsClickListener(this.$moreJobsElement);
+        this.selectorsOnChangeListener();
+        this.moreJobsClickListener();
     }
 
-    selectorsOnChangeListener(shadowRoot) {
+    selectorsOnChangeListener() {
+        let self = this;
         let selectElements = [
-            shadowRoot.querySelector(`.${FIND_YOUR_JOB.SELECT_NAMES.DESCRIPTION}`),
-            shadowRoot.querySelector(`.${FIND_YOUR_JOB.SELECT_NAMES.LOCATION}`),
-            shadowRoot.querySelector(`.${FIND_YOUR_JOB.SELECT_NAMES.FULL_TIME}`)
+            this.shadowRoot.querySelector(`.${FIND_YOUR_JOB.SELECT_NAMES.DESCRIPTION}`),
+            this.shadowRoot.querySelector(`.${FIND_YOUR_JOB.SELECT_NAMES.LOCATION}`),
+            this.shadowRoot.querySelector(`.${FIND_YOUR_JOB.SELECT_NAMES.FULL_TIME}`)
         ];
 
         for (let element of selectElements) {
-            element.onchange = this.handleSelectorOnChange.bind(this, this);
+            element.onchange = this.handleSelectorOnChange.bind(self);
         }
     }
 
-    moreJobsClickListener(moreJobsElement) {
+    moreJobsClickListener() {
         let self = this;
 
-        moreJobsElement.onclick = function () {
-            Find_Your_Job.showLoader(true, self);
+        this.$moreJobsElement.onclick = function () {
+            self.showLoader(true);
 
-            resource.getMoreJobs().then(response => {
-                Find_Your_Job.hideShowMoreButton(response.showMore, self);
-                Find_Your_Job.showLoader(false, self);
-                self[response.parser](response.jobs);
-            });
+            self.resource
+                .getMoreJobs()
+                .then(response => {
+                    self.hideShowMoreButton(response.showMore);
+                    self.showLoader(false);
+                    self[response.parser](response.jobs);
+                });
         };
     }
 
-    handleSelectorOnChange(context, event) {
+    handleSelectorOnChange(event) {
         let target = event.target;
-        let reRender = true;
 
-        Find_Your_Job.showLoader(true, context);
+        this.showLoader(true);
+        this.$jobsListElement.innerHTML = '';
 
-        resource
+        this.resource
             .executeGetJobs(utils.buildRequestConfig(target.className, target.value))
             .then(response => {
-                Find_Your_Job.hideShowMoreButton(response.showMore, context);
-                Find_Your_Job.showLoader(false, context);
-                context[response.parser](response.jobs, reRender);
+                this.hideShowMoreButton(response.showMore);
+                this.showLoader(false);
+                this[response.parser](response.jobs);
             });
     }
 
-    renderDescriptionJobs(jobs, reRender = false) {
+    /**
+     * @param {Array} jobs
+     */
+    renderDescriptionJobs(jobs) {
         let jobsFragment = document.createDocumentFragment();
-
-        if (reRender) {
-            this.$jobsListElement.innerHTML = '';
-        }
 
         for (let [index, job] of jobs.entries()) {
             let li = document.createElement('li');
@@ -83,12 +87,18 @@ class Find_Your_Job extends HTMLElement {
         this.$jobsListElement.appendChild(jobsFragment);
     }
 
-    static hideShowMoreButton (showMore, context) {
-        context.$moreJobsElement.style.display = showMore ? 'block' : 'none';
+    /**
+     * @param {Boolean} show
+     */
+    hideShowMoreButton(show) {
+        this.$moreJobsElement.style.display = show ? 'block' : 'none';
     }
 
-    static showLoader(show, context) {
-        context.$loaderElement.style.display = show ? 'block' : 'none';
+    /**
+     * @param {Boolean} show
+     */
+    showLoader(show) {
+        this.$loaderElement.style.display = show ? 'block' : 'none';
     }
 }
 

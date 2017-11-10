@@ -45,12 +45,12 @@ template.innerHTML = `
         
         <div class="find-your-job">
             <div class="selectors">
-                 <select class="description-select">
-                <option selected>Description</option>
-                <option value="javascript">JavaScript</option>
-                <option value="ruby">Ruby</option>
-                <option value="python">Python</option>
-                <option value="java">Java</option>
+                <select class="description-select">
+                    <option selected>Description</option>
+                    <option value="javascript">JavaScript</option>
+                    <option value="ruby">Ruby</option>
+                    <option value="python">Python</option>
+                    <option value="java">Java</option>
                 </select>
                 <select class="location-select">
                     <option selected>Location</option>
