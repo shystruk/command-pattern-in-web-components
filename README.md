@@ -5,7 +5,6 @@ Example usage:
 <find-your-job></find-your-job>
 ```
 
-Demo:
 ![](images/demo.gif)
 
 Run server localhost:80
